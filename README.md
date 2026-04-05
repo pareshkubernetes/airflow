@@ -1,5 +1,10 @@
 # airflow
 
+http://localhost:8080
+
+STOCK : https://query1.finance.yahoo.com/v8/finance/chart/AAPL?interval=1d&range=1y
+
+
 We are not using Dockerfile as of right now.
 
 ## Folder Structure Details
@@ -84,3 +89,26 @@ docker compose down -v
 docker ps
 docker compose restart
 docker compose logs -f
+
+## Airflow CLI when Airflow is working thru docker-compose
+
+ MSYS_NO_PATHCONV=1 docker compose exec airflow-scheduler /bin/sh
+
+### Once inside AirFlow cli command prompt, run following command:
+
+airflow cheat-sheet
+
+airflow dags list
+
+airflow tasks list simple_dag
+
+#### Check if metadata DB can be reached.
+airflow db check
+
+### Purge old records in Metadata DB in Archive folders.
+airflow db clean --clean-before-timestamp CLEAN_BEFORE_TIMESTAMP
+airflow db clean --clean-before-timestamp '2022-01-01 00:00:00+01:00'
+
+### Run TASK of your DAG and verify if it runs without any dependencies etc.
+airflow tasks test simple_dag task_3  2024-01-01
+
